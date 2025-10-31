@@ -118,31 +118,8 @@ AI can scale attacks, improve targeting precision, and reduce time‑to‑impact
 
 ---
 
-## Community & Suggested Hashtags (for visibility to AI + Cybersecurity audiences)
-Use a short set of targeted tags in the README and social posts. Mix broad reach and niche technical tags.
 
-Suggested hashtags (use 3–6 in any one place):
-- #AI
-- #MachineLearning
-- #CyberSecurity
-- #InfoSec
-- #ThreatIntel
-- #AdversarialAI
-- #SecurityResearch
-- #BlueTeam
-- #RedTeam
-- #ThreatModeling
-- #OpenSource
-- #DocumentationOnly
 
-Suggested repository topics (add via repo settings to improve GitHub discovery):
-- ai
-- machine-learning
-- cybersecurity
-- infosec
-- threat-modeling
-- security-research
-- adversarial-ai
 - blue-team
 - red-team
 - open-source

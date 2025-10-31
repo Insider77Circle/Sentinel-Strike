@@ -1,0 +1,26 @@
+name: Docs feedback
+description: Suggest edits or report issues with the documentation
+labels: [documentation]
+title: "Docs: <short summary>"
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What needs to change or be clarified?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Links, sections, or files related to this feedback
+  - type: dropdown
+    id: type
+    attributes:
+      label: Feedback type
+      options:
+        - correction
+        - addition
+        - clarification
+        - restructure

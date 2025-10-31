@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+title: Sentinel-Strike (Documentation-Only)
+authors:
+  - family-names: YourLast
+    given-names: YourFirst
+abstract: >-
+  Documentation-only repository exploring hypothetical AI-augmented ransomware for defender
+  awareness and threat modeling. No functional malware code is present or permitted.
+keywords:
+  - ransomware
+  - AI
+  - cybersecurity
+  - threat-modeling
+message: If you use this work, please cite this repository.

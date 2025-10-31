@@ -120,9 +120,3 @@ AI can scale attacks, improve targeting precision, and reduce time‑to‑impact
 
 
 
-- blue-team
-- red-team
-- open-source
-- documentation-only
-
-Docs landing page: `docs/index.md`

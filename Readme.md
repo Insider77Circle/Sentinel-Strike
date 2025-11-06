@@ -14,6 +14,7 @@
 
 ## 📋 Table of Contents
 
+- [Two-Stage Attack Architecture Overview](#-two-stage-attack-architecture-overview)
 - [Executive Summary](#1-executive-summary)
 - [Background & Context](#2-background--context)
 - [Hypothetical Application Overview](#3-hypothetical-application-overview)
@@ -25,6 +26,50 @@
 - [Ethical & Legal Disclaimer](#9-ethical--legal-disclaimer)
 - [Further Reading](#10-further-reading)
 - [Repository Contents](#repository-contents)
+
+---
+
+## 🎨 Two-Stage Attack Architecture Overview
+
+**Sentinel-Strike operates as a 2nd stage AI-augmented payload, injected by modified Petya ransomware:**
+
+```mermaid
+graph TB
+    subgraph "Stage 1: Petya Base Infection"
+        A[Petya Dropper<br/>Modified with Injection Logic] -->|Infects| B[Master Boot Record<br/>MBR Takeover]
+        B --> C[System Reboot<br/>Petya Encryption Starts]
+        C --> D[Petya Establishes<br/>Persistence Layer]
+    end
+
+    subgraph "Stage 2: Sentinel-Strike Injection"
+        D -->|Injects Binaries| E[Sentinel-Strike Payload<br/>AI-Augmented Components]
+        E --> F[ML Models Loaded<br/>NLP, CV, RL Modules]
+        F --> G[AI Reconnaissance<br/>Network Mapping]
+        G --> H[Enhanced Capabilities<br/>Active]
+    end
+
+    subgraph "Coordinated Operations"
+        H --> I[Petya: System Encryption]
+        H --> J[Sentinel: Data Exfiltration]
+        H --> K[Sentinel: AI Negotiation<br/>with Guardrails]
+        I --> L[Combined Threat<br/>Maximum Impact]
+        J --> L
+        K --> L
+    end
+
+    style A fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px
+    style E fill:#9775fa,stroke:#6741d9,stroke-width:3px
+    style L fill:#ff8787,stroke:#c92a2a,stroke-width:4px
+    style D fill:#ffa94d,stroke:#e67700,stroke-width:2px
+    style H fill:#4dabf7,stroke:#1971c2,stroke-width:2px
+    style K fill:#51cf66,stroke:#2f9e44,stroke-width:2px
+```
+
+**Key Features:**
+- 🔴 **Stage 1 (Petya):** MBR infection, system-level persistence, boot-time encryption
+- 🟣 **Stage 2 (Sentinel):** AI-augmented reconnaissance, intelligent data exfiltration
+- 🟢 **AI Guardrails:** Prompt-injection resistant negotiation bot
+- 🔶 **Combined Impact:** Coordinated multi-vector attack
 
 ---
 

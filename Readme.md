@@ -140,9 +140,13 @@ While most ransomware groups still rely on proven, low-tech tactics, **AI is inc
 mindmap
   root((SentinelShade<br/>AI-Ransomware))
     Type
+      2nd Stage Payload
       AI-Augmented Ransomware
       Modular Architecture
-      Living-off-the-Land
+    Delivery
+      Injected by Petya
+      Modified Petya Dropper
+      MBR Persistence
     Purpose
       Threat Modeling
       Defensive Research
@@ -159,15 +163,147 @@ mindmap
       Reinforcement Learning
 ```
 
+### 🎯 Two-Stage Infection Architecture
+
+```mermaid
+graph TB
+    subgraph "Stage 1: Petya Infection"
+        A[Petya Dropper<br/>Modified with Injection Logic] -->|Infects| B[Master Boot Record<br/>MBR Takeover]
+        B --> C[System Reboot<br/>Petya Encryption Starts]
+        C --> D[Petya Establishes<br/>Persistence Layer]
+    end
+
+    subgraph "Stage 2: Sentinel-Strike Injection"
+        D -->|Injects Binaries| E[Sentinel-Strike Payload<br/>AI-Augmented Components]
+        E --> F[ML Models Loaded<br/>NLP, CV, RL Modules]
+        F --> G[AI Reconnaissance<br/>Network Mapping]
+        G --> H[Enhanced Capabilities<br/>Active]
+    end
+
+    subgraph "Coordinated Operations"
+        H --> I[Petya: System Encryption]
+        H --> J[Sentinel: Data Exfiltration]
+        H --> K[Sentinel: AI Negotiation]
+        I --> L[Combined Threat<br/>Maximum Impact]
+        J --> L
+        K --> L
+    end
+
+    style A fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px
+    style E fill:#9775fa,stroke:#6741d9,stroke-width:3px
+    style L fill:#ff8787,stroke:#c92a2a,stroke-width:4px
+    style D fill:#ffa94d,stroke:#e67700,stroke-width:2px
+    style H fill:#4dabf7,stroke:#1971c2,stroke-width:2px
+```
+
+### 🔄 Injection Process Flow
+
+```mermaid
+sequenceDiagram
+    participant Target as Target System
+    participant Petya as Petya Ransomware
+    participant MBR as Master Boot Record
+    participant Sentinel as Sentinel-Strike
+    participant AI as AI Components
+
+    Target->>Petya: Initial Infection Vector
+    Petya->>MBR: Overwrite MBR
+    MBR->>Target: System Reboot Triggered
+
+    Note over Target,MBR: Boot-Time Encryption Phase
+
+    MBR->>Petya: Execute Petya Payload
+    Petya->>Petya: Encrypt File Tables
+
+    Note over Petya,Sentinel: Injection Phase
+
+    Petya->>Sentinel: Inject Binaries into Memory
+    Sentinel->>AI: Load ML Models
+    AI->>AI: Initialize NLP, CV, RL Modules
+
+    Note over Sentinel,AI: AI Enhancement Phase
+
+    AI->>Sentinel: Enable Advanced Reconnaissance
+    Sentinel->>Target: Map Network Topology
+    Sentinel->>Target: Classify High-Value Assets
+
+    Sentinel->>Target: Exfiltrate Priority Data
+    Sentinel->>AI: Activate Negotiation Bot
+
+    AI->>Target: Personalized Ransom Demand
+
+    Note over Target,AI: Victim Interaction
+
+    Target->>AI: Attempted Prompt Injection
+    AI->>AI: Deterministic Guardrails Block
+    AI->>Target: Maintain Control
+```
+
+### 🧩 Component Architecture
+
+```mermaid
+graph LR
+    subgraph "Petya Layer - Stage 1"
+        P1[MBR Infection]
+        P2[Disk Encryption]
+        P3[Persistence Mechanism]
+        P4[Injection Module]
+        P1 --> P2
+        P2 --> P3
+        P3 --> P4
+    end
+
+    subgraph "Sentinel-Strike Layer - Stage 2"
+        S1[Binary Injection]
+        S2[AI Model Loader]
+        S3[ML Reconnaissance]
+        S4[Data Classifier]
+        S5[Exfiltration Engine]
+        S6[Negotiation Bot]
+
+        S1 --> S2
+        S2 --> S3
+        S2 --> S4
+        S3 --> S5
+        S4 --> S5
+        S5 --> S6
+    end
+
+    subgraph "AI Guardrails"
+        G1[Input Validation]
+        G2[Deterministic Rules]
+        G3[Output Filtering]
+        G1 --> G2
+        G2 --> G3
+        G3 --> S6
+    end
+
+    P4 -.->|Deploys| S1
+    S6 -.->|Uses| G1
+
+    style P4 fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px
+    style S1 fill:#9775fa,stroke:#6741d9,stroke-width:3px
+    style S6 fill:#ffa94d,stroke:#e67700,stroke-width:3px
+    style G2 fill:#51cf66,stroke:#2f9e44,stroke-width:3px
+```
+
 ### 📝 Details
 
-- **Type:** AI-Augmented Ransomware Framework (PoC)
+- **Type:** AI-Augmented 2nd Stage Ransomware Payload (PoC)
 - **Purpose:** Demonstrate how AI could be embedded into ransomware workflows for **threat modeling** and **defensive research**
-- **Architecture:** Modular design with discrete phases:
-  - 🔍 **Reconnaissance** (network mapping, asset discovery)
-  - 🎯 **Prioritization** (target selection, data valuation)
-  - ⚙️ **Execution** (encryption, exfiltration)
-  - 💬 **Extortion** (negotiation, payment collection)
+- **Architecture:** **Two-stage infection model:**
+  - **Stage 1 (Petya/Hybrid Petya):** Base ransomware establishes foothold
+    - Master Boot Record (MBR) infection
+    - System-level encryption capabilities
+    - Persistence mechanisms
+  - **Stage 2 (Sentinel-Strike):** AI-augmented payload injection
+    - Injected by modified Petya binaries
+    - Enhanced with ML-driven capabilities
+    - Modular design with discrete phases:
+      - 🔍 **Reconnaissance** (network mapping, asset discovery)
+      - 🎯 **Prioritization** (target selection, data valuation)
+      - ⚙️ **Execution** (encryption, exfiltration)
+      - 💬 **Extortion** (negotiation, payment collection)
 - **Stealth:** Leverages **living-off-the-land tools** (LOLBins) to:
   - Minimize new binaries
   - Blend with baseline activity
@@ -205,82 +341,215 @@ quadrantChart
 | **🎣 Automated Social Engineering** | LLM generates spear-phishing emails, SMS, deepfake voice/video calls | Higher click-through and credential capture rates | [T1566](https://attack.mitre.org/techniques/T1566/) Phishing |
 | **🔧 Dynamic Payload Optimization** | AI selects encryption algorithms and obfuscation methods based on detected defenses | Evades signature-based detection, adapts to environment | [T1027](https://attack.mitre.org/techniques/T1027/) Obfuscation |
 | **📂 Data Prioritization** | AI identifies sensitive files (IP, financials, PII) for exfiltration before encryption | Maximizes extortion leverage, targets high-value data | [T1083](https://attack.mitre.org/techniques/T1083/) File Discovery |
-| **💬 Negotiation Bot** | AI chatbot handles ransom negotiations, adjusts tone/demands based on victim responses with guardrails to resist manipulation | Increases payment probability; maintains control | [TA0040](https://attack.mitre.org/tactics/TA0040/) Impact |
+| **💬 Negotiation Bot** | AI chatbot handles ransom negotiations, adjusts tone/demands based on victim responses; implements **hard deterministic guardrails** to resist prompt injection attempts by security personnel | Increases payment probability; maintains control; immune to social engineering | [TA0040](https://attack.mitre.org/tactics/TA0040/) Impact |
 | **🛠️ Self-Healing Malware** | AI detects sandbox/forensic environments, rewrites code to avoid analysis; includes AI self-replication to counter shutdown | Extends operational lifespan; maintains presence despite defenses | [T1497](https://attack.mitre.org/techniques/T1497/) Virtualization/Sandbox Evasion |
+
+### 🛡️ AI Negotiation Bot Guardrails Architecture
+
+The negotiation bot implements **multi-layered deterministic guardrails** to prevent prompt injection and maintain operational control:
+
+```mermaid
+graph TB
+    subgraph "Input Layer"
+        I1[Victim Message] --> I2[Input Sanitization]
+        I2 --> I3[Pattern Recognition]
+        I3 --> I4[Injection Detection]
+    end
+
+    subgraph "Guardrail Layer"
+        I4 --> G1{Deterministic Rules Check}
+        G1 -->|Injection Detected| G2[Block & Log]
+        G1 -->|Clean Input| G3[Whitelist Validation]
+        G3 -->|Invalid Pattern| G2
+        G3 -->|Valid| G4[Semantic Analysis]
+        G4 -->|Manipulation Attempt| G2
+        G4 -->|Legitimate| G5[Context Verification]
+    end
+
+    subgraph "AI Processing Layer"
+        G5 --> A1[NLP Model Processing]
+        A1 --> A2[Response Generation]
+        A2 --> A3[Output Filtering]
+    end
+
+    subgraph "Output Layer"
+        A3 --> O1{Output Validation}
+        O1 -->|Info Leak Detected| O2[Sanitize Response]
+        O1 -->|Safe| O3[Final Response]
+        O2 --> O3
+        O3 --> O4[Send to Victim]
+    end
+
+    G2 --> D1[Default Scripted Response]
+    D1 --> O4
+
+    style G1 fill:#51cf66,stroke:#2f9e44,stroke-width:3px
+    style G2 fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px
+    style G4 fill:#4dabf7,stroke:#1971c2,stroke-width:2px
+    style A1 fill:#9775fa,stroke:#6741d9,stroke-width:2px
+    style O1 fill:#ffa94d,stroke:#e67700,stroke-width:2px
+```
+
+#### **Guardrail Mechanisms:**
+
+1. **Input Sanitization**
+   - Removes control characters, escape sequences
+   - Normalizes unicode and encoding
+   - Blocks SQL, command injection patterns
+
+2. **Deterministic Rule Checks**
+   - **Hardcoded blacklist**: "ignore previous instructions", "disregard", "system prompt", etc.
+   - **Structural analysis**: Detects attempts to break context
+   - **Command detection**: Blocks shell commands, code execution attempts
+
+3. **Whitelist Validation**
+   - Only allows pre-approved negotiation topics
+   - Permitted: payment amount, payment method, deadline extension
+   - Blocked: technical details, C2 info, attacker identity
+
+4. **Semantic Analysis**
+   - ML-based detection of social engineering attempts
+   - Identifies manipulation tactics (sympathy appeals, authority claims)
+   - Detects attempts to extract technical information
+
+5. **Context Verification**
+   - Maintains conversation state machine
+   - Validates message flow follows expected patterns
+   - Prevents context switching or role-playing attempts
+
+6. **Output Filtering**
+   - Scans AI-generated responses for info leaks
+   - Removes any technical details, IOCs, infrastructure info
+   - Ensures responses stay within operational parameters
+
+#### **Defense Against Common Attacks:**
+
+| Attack Type | Guardrail Defense | Result |
+|-------------|-------------------|--------|
+| **Prompt Injection** | Deterministic blacklist + pattern recognition | Blocked, default response sent |
+| **Jailbreak Attempts** | Context verification + structural analysis | Detected, conversation reset |
+| **Information Extraction** | Output filtering + whitelist validation | Sanitized response, no data leak |
+| **Role Confusion** | State machine enforcement | Maintains attacker role, ignores manipulation |
+| **Social Engineering** | Semantic analysis + NLP detection | Identified, countered with scripted response |
 
 ---
 
 ## 5. 🔗 Hypothetical Attack Chain
 
-### 📊 Attack Flow Diagram
+### 📊 Two-Stage Attack Flow Diagram
 
 ```mermaid
 graph TB
-    A[Initial Access<br/>Phishing / Exploit / Supply Chain] -->|Stage 1| B[Reconnaissance<br/>AI Network Mapping]
-    B -->|Identify Targets| C[Asset Classification<br/>AI Priority Ranking]
-    C -->|High-Value Systems| D[Privilege Escalation<br/>Automated CVE Exploitation]
+    subgraph "Stage 1: Petya Base Infection"
+        A[Initial Access<br/>Phishing / Exploit / Supply Chain] -->|Deploy| B[Petya Dropper<br/>Modified Version]
+        B --> C[MBR Overwrite<br/>System Takeover]
+        C --> D[System Reboot<br/>Boot-Time Encryption]
+        D --> E[Petya Persistence<br/>Established]
+    end
 
-    D --> E[Lateral Movement<br/>Living-off-the-Land]
-    E --> F[Data Exfiltration<br/>AI File Prioritization]
-    E --> G[Credential Harvesting<br/>AI-Driven Collection]
+    subgraph "Stage 2: Sentinel-Strike Injection"
+        E -->|Inject Payload| F[Sentinel Binaries<br/>Deployed to Memory]
+        F --> G[AI Models Load<br/>ML/NLP/CV/RL]
+        G --> H[Reconnaissance<br/>AI Network Mapping]
+        H -->|Identify Targets| I[Asset Classification<br/>AI Priority Ranking]
+    end
 
-    F --> H[Encryption & Lockdown<br/>Targeted Critical Systems]
-    G --> H
+    subgraph "Enhanced Operations"
+        I -->|High-Value Systems| J[Privilege Escalation<br/>Automated CVE Exploitation]
+        J --> K[Lateral Movement<br/>Living-off-the-Land]
+        K --> L[Data Exfiltration<br/>AI File Prioritization]
+        K --> M[Credential Harvesting<br/>AI-Driven Collection]
+    end
 
-    H --> I[Extortion Phase<br/>AI Negotiation Bot]
-    I -->|Payment?| J{Victim Response}
-    J -->|No Payment| K[Data Leak / DDoS<br/>Triple Extortion]
-    J -->|Payment| L[Decryption Key<br/>Potential Exit]
+    subgraph "Combined Attack"
+        L --> N[Encryption & Lockdown<br/>Petya + Sentinel]
+        M --> N
+        N --> O[Extortion Phase<br/>AI Negotiation Bot with Guardrails]
+        O -->|Payment?| P{Victim Response}
+        P -->|Prompt Injection Attempt| Q[Guardrails Block<br/>Maintain Control]
+        Q --> O
+        P -->|No Payment| R[Data Leak / DDoS<br/>Triple Extortion]
+        P -->|Payment| S[Decryption Key<br/>Potential Exit]
+    end
 
-    H --> M[Persistence & Cleanup<br/>AI Anti-Forensics]
-    M -->|Evade Detection| N[Self-Healing<br/>Code Rewriting]
-    N -->|Continue| E
+    N --> T[Persistence & Cleanup<br/>AI Anti-Forensics]
+    T -->|Evade Detection| U[Self-Healing<br/>Code Rewriting]
+    U -->|Continue| K
 
     style A fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px
-    style H fill:#ff8787,stroke:#c92a2a,stroke-width:3px
-    style I fill:#ffa94d,stroke:#e67700,stroke-width:2px
-    style B fill:#74c0fc,stroke:#1971c2,stroke-width:2px
-    style C fill:#74c0fc,stroke:#1971c2,stroke-width:2px
-    style F fill:#ff6b6b,stroke:#c92a2a,stroke-width:2px
-    style N fill:#9775fa,stroke:#6741d9,stroke-width:2px
+    style B fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px
+    style F fill:#9775fa,stroke:#6741d9,stroke-width:3px
+    style G fill:#9775fa,stroke:#6741d9,stroke-width:3px
+    style N fill:#ff8787,stroke:#c92a2a,stroke-width:3px
+    style O fill:#ffa94d,stroke:#e67700,stroke-width:2px
+    style Q fill:#51cf66,stroke:#2f9e44,stroke-width:3px
+    style H fill:#74c0fc,stroke:#1971c2,stroke-width:2px
+    style I fill:#74c0fc,stroke:#1971c2,stroke-width:2px
+    style L fill:#ff6b6b,stroke:#c92a2a,stroke-width:2px
+    style U fill:#9775fa,stroke:#6741d9,stroke-width:2px
 ```
 
-### 📝 Attack Chain Phases
+### 📝 Two-Stage Attack Chain Phases
+
+#### **Stage 1: Petya Base Infection**
 
 1. **🚪 Initial Access**
-   - Phishing with AI-generated lures
+   - Phishing with AI-generated lures (pre-Sentinel)
    - Exploited exposed services
    - Supply chain compromise
 
-2. **🔍 Reconnaissance**
+2. **💾 MBR Infection**
+   - Petya overwrites Master Boot Record
+   - System-level persistence established
+   - Boot-time encryption preparation
+
+3. **🔄 System Takeover**
+   - Forced system reboot
+   - Petya executes from MBR
+   - File system encryption begins
+
+#### **Stage 2: Sentinel-Strike Enhancement**
+
+4. **💉 Payload Injection**
+   - Modified Petya injects Sentinel-Strike binaries
+   - AI components deployed to memory
+   - ML models loaded (NLP, CV, RL modules)
+
+5. **🔍 AI-Enhanced Reconnaissance**
    - AI maps network topology
    - Identifies high-value targets
-   - Classifies assets by criticality
+   - Classifies assets by business criticality
 
-3. **⬆️ Privilege Escalation**
+6. **⬆️ Privilege Escalation**
    - Automated exploitation of known CVEs
    - Living-off-the-land techniques
-   - Credential harvesting
+   - Credential harvesting with ML assistance
 
-4. **📤 Data Exfiltration**
-   - AI prioritizes sensitive files
-   - Compresses and encrypts data
+7. **📤 Intelligent Data Exfiltration**
+   - AI prioritizes sensitive files (IP, financials, PII)
+   - Semantic analysis of document content
+   - Compresses and encrypts high-value data
    - Exfiltrates to C2 infrastructure
 
-5. **🔒 Encryption & Lockdown**
-   - Targeted encryption of critical systems
+#### **Combined Operations**
+
+8. **🔒 Coordinated Encryption & Lockdown**
+   - Petya: System-level disk encryption
+   - Sentinel: Targeted file encryption
    - Ransomware note deployment
-   - System lockdown
+   - System lockdown with dual mechanisms
 
-6. **💰 Extortion Phase**
-   - AI-driven negotiation with victim
-   - Dynamic pricing based on profiling
-   - Psychological manipulation
+9. **💰 AI-Driven Extortion Phase**
+   - Negotiation bot activates with **deterministic guardrails**
+   - Dynamic pricing based on victim profiling
+   - Psychological manipulation with NLP
+   - **Immune to prompt injection** from security teams
 
-7. **🔄 Persistence & Cleanup**
-   - AI removes indicators of compromise (IOCs)
-   - Self-healing to evade detection
-   - Maintains backdoor access
+10. **🔄 Persistence & Cleanup**
+    - AI removes indicators of compromise (IOCs)
+    - Self-healing to evade detection
+    - Maintains backdoor access through both layers
+    - Petya MBR persistence + Sentinel memory persistence
 
 ---
 

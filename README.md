@@ -115,6 +115,7 @@ AI can scale attacks, improve targeting precision, and reduce time‑to‑impact
 -   `DISCLAIMER.md` — Ethical and legal disclaimer
 -   `SECURITY.md` — Security policy (docs-only scope)
 -   `CITATION.cff` — Academic citation metadata
+-   Variant Note (defender view) — non-financial autonomous agents variant notes in `docs/ARCHITECTURE.md` and `docs/THREAT_MODEL.md`.
 
 ---
 

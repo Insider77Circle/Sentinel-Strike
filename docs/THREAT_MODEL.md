@@ -24,9 +24,8 @@
 - Data: Tiered/offline backups, FIM on critical paths.
 - Detections: Burst encryption behavior, anomalous service creation, rapid toolchain switching.
 
-## Variant: Edge-Autonomous (non-financial, staged, edge inference)
+## Variant Note: Non-Financial Autonomous Agents (defender view)
 
 - **Adversary goals (variant):** non-financial. No ransom demand, no negotiation, no payment flow. Impact is pursued through autonomous operation, persistence, and replication rather than extortion leverage. The base goals — encryption for access denial and double extortion — do not apply to this variant.
-- **Assumptions (variant, additive):** AI inference runs on-device via a quantized ~7B-parameter model (no cloud dependency); delivery is staged, with a modified Petya lineage loader as stage 1 delivering SentinelStrike as stage 2.
-- **Additional TTP considerations:** staged delivery (loader/payload split); on-device model execution; self-replication as a persistence mechanism (per the base concept's self-healing capability).
-- **Additional defensive controls & detections:** on-device behavioral rules for unauthorized model runtimes; stage-1 wiper-pattern triage; independent hunting of loader and payload persistence; egress controls still apply, but cloud-AI telemetry must not be assumed present.
+- **Assumptions (variant, additive):** AI inference may run on-device as a quantized model in the ~7B-parameter class (no cloud dependency); operations may be staged, with loader and payload as independent components.
+- **Additional defensive controls & detections:** on-device behavioral rules for unauthorized model runtimes; independent hunting of each stage's persistence; wiper-pattern triage for destructive loader detections; egress controls still apply, but cloud-AI telemetry must not be assumed present.
